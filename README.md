@@ -12,7 +12,7 @@ docker build -t humiocli .
 
 ```bash
 docker run --rm \
-  -e HUMIO_ADDR=https://your-humio-instance \
+  -e HUMIO_ADDRESS=https://your-humio-instance \
   -e HUMIO_TOKEN=your-api-token \
   humiocli --address https://cloud.humio.com/  search repo 'your search query'
 ```
@@ -27,13 +27,13 @@ docker run --rm \
 
 ```bash
 # Status
-docker run --rm -e HUMIO_TOKEN=abc123 humiocli --address https://cloud.humio.com/  status
+docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli tatus
 
 # Simple search
-docker run --rm -e HUMIO_TOKEN=abc123 humiocli --address https://cloud.humio.com/  search reponame 'loglevel=ERROR'
+docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli search reponame 'loglevel=ERROR'
 
 # Search with time range
-docker run --rm -e HUMIO_TOKEN=abc123 humiocli --address https://cloud.humio.com/  search  repo '#type=syslog | count()'
+docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli search  repo '#type=syslog | count()'
 ```
 
 The search query is passed as arguments to `humioctl `, so any valid Humio query syntax works.
