@@ -22,18 +22,19 @@ docker run --rm \
 | Variable | Description |
 |---|---|
 | `HUMIO_TOKEN` | API token for authentication |
+| `HUMIO_ADDRESS` | Defaults to http://cloud.humio.com |
 
 ### Examples
 
 ```bash
 # Status
-docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli tatus
+docker run --rm -e HUMIO_TOKEN=abc123 humiocli status
 
 # Simple search
-docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli search reponame 'loglevel=ERROR'
+docker run --rm -e HUMIO_TOKEN=abc123 humiocli search reponame 'loglevel=ERROR'
 
 # Search with time range
-docker run --rm -e HUMIO_TOKEN=abc123 -e HUMIO_ADDRESS=http://cloud.humio.com humiocli search  repo '#type=syslog | count()'
+docker run --rm -e HUMIO_TOKEN=abc123 humiocli search  repo '#type=syslog | count()'
 ```
 
 The search query is passed as arguments to `humioctl `, so any valid Humio query syntax works.
