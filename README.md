@@ -46,3 +46,51 @@ echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{},
 
 The search query is passed as arguments to `humioctl `, so any valid Humio query syntax works.
 
+## MCP (Model Context Protocol) Integration
+
+The MCP image exposes Humio search as a tool that can be used by AI assistants such as Claude Code.
+
+### 1. Build the MCP image
+
+```bash
+docker build -f ./Mcp.Dockerfile -t humiocli-mcp .
+```
+
+### 2. Create a `.env` file
+
+Create a `.env` file in the project root with your Humio API token:
+
+```
+HUMIO_TOKEN=your-api-token-here
+```
+
+> **Note:** Keep this file secret and never commit it to version control. Add `.env` to your `.gitignore`.
+
+### 3. Configure `.mcp.json`
+
+Add the following `.mcp.json` to your project root (or merge into an existing one):
+
+```json
+{
+  "mcpServers": {
+    "humioctl": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file", ".env",
+        "humiocli-mcp"
+      ]
+    }
+  }
+}
+```
+
+This tells Claude Code to launch the `humiocli-mcp` Docker container as an MCP server, injecting credentials from your `.env` file.
+
+### 4. Example query
+
+Once configured, Claude Code can run searches against the `ezp_developer` repository. For example:
+
+> Search humio in ezp_developer repo using query `type=ERROR #microservice=app-bff #environment=staging | count()` and return count

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "humioctl": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--env-file", ".env",
+        "humiocli-mcp"
+      ]
+    }
+  }
+}

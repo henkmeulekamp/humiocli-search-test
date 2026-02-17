@@ -11,14 +11,14 @@ MAX_QUERY_LENGTH = 10000
 
 @mcp.tool
 def search(repo: str, query: str) -> str:
-    """Run a humioctl search query against a LogScale/Humio repository."""
+    """Run a humio search query against a LogScale/Humio repository."""
     if not REPO_PATTERN.match(repo):
         return "Error: invalid repo name. Only alphanumeric characters, hyphens, and underscores are allowed."
     if len(query) > MAX_QUERY_LENGTH:
         return f"Error: query too long (max {MAX_QUERY_LENGTH} characters)."
 
     result = subprocess.run(
-        ["humioctl", "search", f"--repo={repo}", query],
+        ["humioctl", "search", f"{repo}", query],
         capture_output=True,
         text=True,
         timeout=120,
