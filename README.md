@@ -1,11 +1,13 @@
 # humiocli-test
 
-Docker image that runs [humioctl](https://github.com/humio/cli) v0.39.0 search queries against the `ezp_developer` repository.
-
+Docker image that runs [humioctl](https://github.com/humio/cli) v0.39.0  
+Second Docker image that exposes humio cli search command as tool.  
+  
 ## Build
 
 ```bash
-docker build -t humiocli .
+docker build -f ./Mcp.Dockerfile -t humiocli-mcp .
+docker build -f ./Cli.Dockerfile -t humiocli .
 ```
 
 ## Usage
@@ -27,9 +29,6 @@ docker run --rm \
 ### Examples
 
 ```bash
-docker build -f ./Mcp.Dockerfile -t humiocli-mcp .
-docker build -f ./Cli.Dockerfile -t humiocli .
-
 # Status
 docker run --rm -e HUMIO_TOKEN=abc123 humiocli status
 
@@ -39,12 +38,12 @@ docker run --rm -e HUMIO_TOKEN=abc123 humiocli search reponame 'loglevel=ERROR'
 # Search with time range
 docker run --rm -e HUMIO_TOKEN=abc123 humiocli search  repo '#type=syslog | count()'
 
-
+# test mcp 
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{},"clientInfo":{"nam
   e":"test"},"protocolVersion":"2024-11-05"}}' | docker run -i --rm humiocli-mcp
 ```
 
-The search query is passed as arguments to `humioctl `, so any valid Humio query syntax works.
+The search query is passed as arguments to `humioctl`, so any valid Humio query syntax works.
 
 ## MCP (Model Context Protocol) Integration
 
