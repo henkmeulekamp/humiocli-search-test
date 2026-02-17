@@ -27,6 +27,9 @@ docker run --rm \
 ### Examples
 
 ```bash
+docker build -f ./Mcp.Dockerfile -t humiocli-mcp .
+docker build -f ./Cli.Dockerfile -t humiocli .
+
 # Status
 docker run --rm -e HUMIO_TOKEN=abc123 humiocli status
 
@@ -35,6 +38,10 @@ docker run --rm -e HUMIO_TOKEN=abc123 humiocli search reponame 'loglevel=ERROR'
 
 # Search with time range
 docker run --rm -e HUMIO_TOKEN=abc123 humiocli search  repo '#type=syslog | count()'
+
+
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{},"clientInfo":{"nam
+  e":"test"},"protocolVersion":"2024-11-05"}}' | docker run -i --rm humiocli-mcp
 ```
 
 The search query is passed as arguments to `humioctl `, so any valid Humio query syntax works.

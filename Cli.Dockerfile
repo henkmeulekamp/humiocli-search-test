@@ -8,7 +8,7 @@ FROM alpine:3.19
 
 RUN apk add --no-cache ca-certificates
 
-COPY --from=builder /go/bin/humioctl /usr/local/bin/humioctl
 ENV HUMIO_ADDRESS=http://cloud.humio.com
 
+COPY --from=builder /go/bin/humioctl /usr/local/bin/humioctl
 ENTRYPOINT ["humioctl"]
