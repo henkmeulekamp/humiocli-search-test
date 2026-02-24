@@ -1,7 +1,7 @@
 # humiocli-test
 
 Docker image that runs [humioctl](https://github.com/humio/cli) v0.39.0  
-Second Docker image that exposes humio cli search command as tool.  
+Second Docker image that exposes humio cli search command as MCP tool.  
   
 ## Build
 
@@ -35,8 +35,8 @@ docker run --rm -e HUMIO_TOKEN=abc123 humiocli status
 # Simple search
 docker run --rm -e HUMIO_TOKEN=abc123 humiocli search reponame 'loglevel=ERROR'
 
-# Search with time range
-docker run --rm -e HUMIO_TOKEN=abc123 humiocli search  repo '#type=syslog | count()'
+# Search with time range (last 15 minutes)
+docker run --rm -e HUMIO_TOKEN=abc123 humiocli search --start 15m repo '#type=syslog | count()'
 
 # test mcp 
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"capabilities":{},"clientInfo":{"nam
